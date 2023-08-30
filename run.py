@@ -1,7 +1,11 @@
 import time
+import random
 
 
 class Question:
+    """
+    questions class 
+    """
     def __init__(self, question, options, answer):
         self.question = question
         self.options = options
@@ -11,15 +15,16 @@ class Question:
         print(self.question)
         for option in self.options:
             print(option)
-        start_time = time.time()
-        user_answer = input("Your answer: ").upper()
-        elapsed_time = time.time() - start_time
-
-        if elapsed_time > time_limit:
-            print("Time's up!")
-            return False
-
-        return user_answer == self.answer
+        
+        remaining_time = time_limit
+        while remaining_time > 0:
+            print(f"Time remaining: {remaining_time} seconds", end="\r")
+            time.sleep(1)
+            remaining_time -= 1
+        
+        print("\nTime's up!")
+        input("Press Enter to continue...")
+        return False
 
 
 # Define the questions and answers
@@ -34,7 +39,7 @@ questions = {
         # Add more questions...
     ],
     "hard": [
-        Question("When was the Python programming language first released?",
+        Question("In which year was the Python programming language released?",
                  ["A) 1989", "B) 1991", "C) 2000", "D) 2005"],
                  "B"),
         Question("What is the largest mammal?",
@@ -48,6 +53,7 @@ questions = {
 # Function to play the quiz
 def play_quiz(difficulty, username):
     questions_list = questions[difficulty]
+    random.shuffle(questions_list)  # Randomize the order of questions
     score = 0
 
     for question in questions_list:
@@ -60,21 +66,23 @@ def play_quiz(difficulty, username):
             print("Incorrect!")
 
     print("\n" + "="*30)
-    print(f"Quiz complete,{username}!Your score:{score}/{len(questions_list)}")
+    print(f"Quiz complete,{username}! You score {score}/{len(questions_list)}")
 
 
 # Main game loop
 def main():
     ascii_art = r"""
-                    88
-                        ""
- ,adPPYb,d8 88       88 88 888888888
-a8"    `Y88 88       88 88      a8P"
-8b       88 88       88 88   ,d8P'
-"8a    ,d88 "8a,   ,a88 88 ,d8"
- `"YbbdP'88  `"YbbdP'Y8 88 888888888
-         88
-         88
+                        88            
+                        ""            
+                                      
+ ,adPPYb,d8 88       88 88 888888888  
+a8"    `Y88 88       88 88      a8P"  
+8b       88 88       88 88   ,d8P'    
+"8a    ,d88 "8a,   ,a88 88 ,d8"       
+ `"YbbdP'88  `"YbbdP'Y8 88 888888888  
+         88                           
+         88    
+                                           
     """
     print(ascii_art)
     print("Welcome to the Quiz Game!")
