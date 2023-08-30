@@ -1,30 +1,21 @@
-import time
 import random
 
-
 class Question:
-    """
-    questions class 
-    """
     def __init__(self, question, options, answer):
         self.question = question
         self.options = options
         self.answer = answer
 
-    def ask(self, time_limit):
+    def ask(self, _):
         print(self.question)
         for option in self.options:
             print(option)
         
-        remaining_time = time_limit
-        while remaining_time > 0:
-            print(f"Time remaining: {remaining_time} seconds", end="\r")
-            time.sleep(1)
-            remaining_time -= 1
-        
-        print("\nTime's up!")
-        input("Press Enter to continue...")
-        return False
+        user_answer = input("\nYour answer: ").upper()
+        return user_answer == self.answer
+
+# ... (rest of the code)
+
 
 
 # Define the questions and answers
@@ -39,7 +30,7 @@ questions = {
         # Add more questions...
     ],
     "hard": [
-        Question("In which year was the Python programming language released?",
+        Question("In which year was the Python programming language first released?",
                  ["A) 1989", "B) 1991", "C) 2000", "D) 2005"],
                  "B"),
         Question("What is the largest mammal?",
@@ -48,7 +39,6 @@ questions = {
         # Add more questions...
     ]
 }
-
 
 # Function to play the quiz
 def play_quiz(difficulty, username):
@@ -66,24 +56,18 @@ def play_quiz(difficulty, username):
             print("Incorrect!")
 
     print("\n" + "="*30)
-    print(f"Quiz complete,{username}! You score {score}/{len(questions_list)}")
-
+    print(f"Quiz completed, {username}! Your score: {score}/{len(questions_list)}")
 
 # Main game loop
 def main():
-    ascii_art = r"""
-                        88            
-                        ""            
-                                      
- ,adPPYb,d8 88       88 88 888888888  
-a8"    `Y88 88       88 88      a8P"  
-8b       88 88       88 88   ,d8P'    
-"8a    ,d88 "8a,   ,a88 88 ,d8"       
- `"YbbdP'88  `"YbbdP'Y8 88 888888888  
-         88                           
-         88    
-                                           
-    """
+    ascii_art = (
+        r" ______   _______ _    _ _   _  _____ " "\n"
+        r"|  ____| |__   __| |  | | \ | |/ ____|" "\n"
+        r"| |__       | |  | |  | |  \| | (___  " "\n"
+        r"|  __|      | |  | |  | | . ` |\___ \ " "\n"
+        r"| |____     | |  | |__| | |\  |____) |" "\n"
+        r"|______|    |_|   \____/|_| \_|_____/ " "\n"
+    )
     print(ascii_art)
     print("Welcome to the Quiz Game!")
 
@@ -105,7 +89,6 @@ a8"    `Y88 88       88 88      a8P"
             break
         else:
             print("Invalid choice. Please select a valid option.")
-
 
 if __name__ == "__main__":
     main()
