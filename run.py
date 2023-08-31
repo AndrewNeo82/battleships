@@ -1,22 +1,38 @@
 import random
 
 class Question:
+    """
+    Represents a quiz question with its options and correct answer.
+    """
+
     def __init__(self, question, options, answer):
+        """
+        Initializes a Question instance.
+
+        Args:
+            question (str): The question text.
+            options (list of str): List of answer options.
+            answer (str): The correct answer.
+        """
         self.question = question
         self.options = options
         self.answer = answer
 
     def ask(self, _):
+        """
+        Asks the question, displays options, takes user's answer, and checks if it's correct.
+
+        Args:
+            _ (int): Not used.
+
+        Returns:
+            bool: True if the user's answer is correct, False otherwise.
+        """
         print(self.question)
         for option in self.options:
             print(option)
-        
         user_answer = input("\nYour answer: ").upper()
-        return user_answer == self.answer
-
-# ... (rest of the code)
-
-
+        return user_answer == self.answer.upper()  # Convert both answers to uppercase
 
 # Define the questions and answers
 questions = {
@@ -40,8 +56,14 @@ questions = {
     ]
 }
 
-# Function to play the quiz
 def play_quiz(difficulty, username):
+    """
+    Plays the quiz game.
+
+    Args:
+        difficulty (str): Difficulty level of the quiz.
+        username (str): User's username.
+    """
     questions_list = questions[difficulty]
     random.shuffle(questions_list)  # Randomize the order of questions
     score = 0
@@ -49,7 +71,7 @@ def play_quiz(difficulty, username):
     for question in questions_list:
         print("\n" + "="*30)
         print(f"Question: {questions_list.index(question) + 1}")
-        if question.ask(10 if difficulty == "easy" else 5):
+        if question.ask(None):  # No time limit
             print("Correct!")
             score += 1
         else:
@@ -58,15 +80,11 @@ def play_quiz(difficulty, username):
     print("\n" + "="*30)
     print(f"Quiz completed, {username}! Your score: {score}/{len(questions_list)}")
 
-# Main game loop
 def main():
+    """
+    Main game loop to run the quiz game.
+    """
     ascii_art = (
-        r" ______   _______ _    _ _   _  _____ " "\n"
-        r"|  ____| |__   __| |  | | \ | |/ ____|" "\n"
-        r"| |__       | |  | |  | |  \| | (___  " "\n"
-        r"|  __|      | |  | |  | | . ` |\___ \ " "\n"
-        r"| |____     | |  | |__| | |\  |____) |" "\n"
-        r"|______|    |_|   \____/|_| \_|_____/ " "\n"
     )
     print(ascii_art)
     print("Welcome to the Quiz Game!")
